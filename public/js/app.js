@@ -1,11 +1,8 @@
-console.log('test1');
 angular.module('fnthanksmom', [
-    'ngRoute',
+    'ngRoute'
 ])
 .config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {
-
-        console.log('test2');
 
         if (history.pushState) {
             //$locationProvider.html5Mode(true);
