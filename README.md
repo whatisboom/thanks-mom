@@ -5,4 +5,4 @@ API
 ===
 Start the server by:
 
-    node server.py
+    node server.js
