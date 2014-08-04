@@ -59,9 +59,9 @@ router.route('/names')
         });
     });
 
-router.route('/names/:name_id')
+router.route('/names/:nameId')
     .get(function(request, response) {
-        queueItem.findById(request.params.name_id, function(error, name) {
+        queueItem.findById(request.params.nameId, function(error, name) {
             var context = {};
             if (error) {
                 context.errors = [error];
@@ -74,7 +74,7 @@ router.route('/names/:name_id')
         });
     })
     .put(function(request, response) {
-        queueItem.findById(request.params.name_id, function(error, name) {
+        queueItem.findById(request.params.nameId, function(error, name) {
             var context = {};
             if (error) {
                 context.errors = [error];
@@ -102,7 +102,7 @@ router.route('/names/:name_id')
     })
     .delete(function(request, response) {
         queueItem.remove({
-            _id: request.params.name_id
+            _id: request.params.nameId
         }, function(error, name) {
             var context = {};
             if (error) {
