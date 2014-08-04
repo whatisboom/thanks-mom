@@ -19,7 +19,7 @@
 *.rar
 *.tar
 *.zip
-*/node_packages/*
+node_modules/
  
 # Logs and databases #
 ######################
@@ -39,4 +39,4 @@ Thumbs.db
 
 # My files
 
-*/config/*
+config/
