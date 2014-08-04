@@ -5,13 +5,14 @@ var mongoose = require('mongoose');
 var db = require('./config/db')
 var queueItem = require('./app/models/queueItem');
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 var port = process.env.PORT || 8888;
 
 var router = express.Router();
 
 mongoose.connect(db.url);
-
-app.use(bodyParser.json());
 
 router.use(function(request, response, next) {
     console.log('%s %s %s', request.method, request.url, request.path);
