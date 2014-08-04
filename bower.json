@@ -1,0 +1,27 @@
+{
+  "name": "thanks-mom",
+  "version": "0.0.0",
+  "authors": [
+    "Brandon Jernigan <brandon@whatisboom.com>"
+  ],
+  "description": "twitter app for posting stupid names of stupid callers",
+  "keywords": [
+    "node",
+    "angular",
+    "json"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/whatisboom/thanks-mom",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "~1.2.21",
+    "foundation": "~5.3.3"
+  }
+}
