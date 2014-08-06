@@ -1,6 +1,6 @@
 function NamesController($scope, $http) {
 
-    $scope.title = "Thanks, Mom."
+    $scope.title = "@fnthanksmom"
 
     $scope.submitName = function() {
 
