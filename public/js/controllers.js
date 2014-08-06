@@ -12,7 +12,7 @@ function NamesController($scope, $http) {
 
         $http.post('/api/names', data)
         .success(function(response, status, headers, config) {
-            $scope.data.names.push(data);
+            $scope.data.names.push(response.data.name);
             $scope.name = "";
             $scope.text = "";
             $scope.hashtags = "";

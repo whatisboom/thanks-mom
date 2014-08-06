@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var db = require('./config/db')
 var queueItem = require('./app/models/queueItem');
+var validators = require('./app/modules/validators');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -41,7 +42,7 @@ router.route('/names')
         var item = new queueItem();
         item.name = request.body.name;
         item.text = request.body.text;
-        item.hashtags = request.body.hashtags;
+        item.hashtags = validators.hashtags(request.body.hashtags);
 
         var context = {};
 
@@ -51,6 +52,9 @@ router.route('/names')
                 context.errors = [error];
             }
             else {
+                context.data = {
+                    name: item
+                };
                 context.meta = {
                     message: "Name saved successfully"
                 };
