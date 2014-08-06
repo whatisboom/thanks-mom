@@ -14,8 +14,8 @@ angular.module('fnthanksmom', [
                 controller: 'NamesController'
             })
             .when('/names/:nameId',{
-                templateUrl: '/public/partials/names.html',
-                controller: 'NamesController'
+                templateUrl: '/public/partials/name.html',
+                controller: 'NameController'
             })
             .otherwise({
                 redirectTo: '/'

@@ -3,7 +3,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var db = require('./config/db')
-var queueItem = require('./app/models/queueItem');
+var NameItem = require('./app/models/NameItem');
+var QueueItem = require('./app/models/QueueItem');
 var validators = require('./app/modules/validators');
 
 app.use(bodyParser.json());
@@ -22,24 +23,43 @@ router.use(function(request, response, next) {
 
 router.route('/names')
     .get(function(request, response) {
-        queueItem.find(function(error, items){
+        console.log();
+        NameItem.find(function(error, items){
             var context = {};
+
+            var form = [];
+
+            for (field in NameItem.schema.paths) {
+                if (NameItem.schema.paths.hasOwnProperty(field)) {
+                    forms.push(field);
+                }
+            };
+
+            context.data.form = form;
 
             if (error) {
                 context.errors = [error];
+                response.json(context);
             }
             else {
-                context.data = {
-                    names: items
-                }
+                QueueItem.find(function(error, queues) {
+                    if (error) {
+                        context.errors = [error];
+                    }
+                    else {
+                        context.data = {
+                            queues: queues,
+                            names: items
+                        };
+                    }
+                    response.json(context);
+                });
             }
-
-            response.json(context);
 
         });
     })
     .post(function(request, response) {
-        var item = new queueItem();
+        var item = new NameItem();
         item.name = request.body.name;
         item.text = request.body.text;
         item.hashtags = validators.hashtags(request.body.hashtags);
@@ -66,7 +86,7 @@ router.route('/names')
 
 router.route('/names/:nameId')
     .get(function(request, response) {
-        queueItem.findById(request.params.nameId, function(error, item) {
+        NameItem.findById(request.params.nameId, function(error, item) {
             var context = {};
             if (error) {
                 context.errors = [error];
@@ -79,7 +99,7 @@ router.route('/names/:nameId')
         });
     })
     .put(function(request, response) {
-        queueItem.findById(request.params.nameId, function(error, item) {
+        NameItem.findById(request.params.nameId, function(error, item) {
             var context = {};
             if (error) {
                 context.errors = [error];
@@ -107,7 +127,7 @@ router.route('/names/:nameId')
         });
     })
     .delete(function(request, response) {
-        queueItem.remove({
+        NameItem.remove({
             _id: request.params.nameId
         }, function(error, name) {
             var context = {};
@@ -122,7 +142,7 @@ router.route('/names/:nameId')
                 };
             }
 
-            queueItem.find(function(error, items) {
+            NameItem.find(function(error, items) {
                 context.data = {
                     names: items
                 };

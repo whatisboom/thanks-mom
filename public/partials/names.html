@@ -19,6 +19,13 @@
             <button class="radius small right">Submit</button>
         </div>
     </div>
+    <div class="row">
+        <div class="columns small-12">
+            <select ng-model="queue" name="queue">
+                <option ng-repeat="queue in data.queues" value="{{queue.name}}">{{queue.name}}</option>
+            </select>
+        </div>
+    </div>
 </form>
 
 <div class="row">
@@ -36,7 +43,7 @@
                     <td> <a ng-bind="item.name" ng-href="/names/{{item._id}}"></a></td>
                     <td ng-bind="item.text"></td>
                     <td ng-bind="item.hashtags"></td>
-                    <td><a ng-click="delete(item._id)" class="small right button radius">Delete</a></td>
+                    <td><a ng-click="deleteName(item._id)" class="small right button radius">Delete</a></td>
                 </tr>
             </tbody>
         </table>

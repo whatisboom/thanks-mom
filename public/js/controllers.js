@@ -37,5 +37,15 @@ function NamesController($scope, $http) {
 
 }
 
+function NameController($scope, $http) {
+
+    $scope.editName = function() {
+
+    };
+
+    $scope.title = "Editing ";
+}
+
 angular.module('fnthanksmom')
-    .controller('NamesController', ['$scope', '$http', NamesController]);
+    .controller('NamesController', ['$scope', '$http', NamesController])
+    .controller('NameController', ['$scope', '$http', NameController]);
