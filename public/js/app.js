@@ -5,7 +5,7 @@ angular.module('fnthanksmom', [
     function($routeProvider, $locationProvider) {
 
         if (history.pushState) {
-            //$locationProvider.html5Mode(true);
+            $locationProvider.html5Mode(true);
         }
 
         $routeProvider

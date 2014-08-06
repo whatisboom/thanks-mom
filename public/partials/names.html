@@ -1,3 +1,44 @@
-<h1>{{title}}</h1>
+<div class="row">
+    <div class="columns small-12">
+        <h1>{{title}}</h1>
+    </div>
+</div>
 
-<p ng-repeat="name in data.names">{{name.text }}</p>
+<form ng-submit="submitName()">
+    <div class="row">
+        <div class="columns small-12 medium-3">
+            <input placeholder="Name" type="text" ng-model="name" name="name"/>
+        </div>
+        <div class="columns small-12 medium-3">
+            <input placeholder="Text" type="text" ng-model="text" name="text"/>
+        </div>
+        <div class="columns small-12 medium-4">
+            <input placeholder="Hashtags" type="text" ng-model="hashtags" name="hashtags"/>
+        </div>
+        <div class="columns small-12 medium-2">
+            <button class="small right">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="columns small-12">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Misc Text</th>
+                    <th colspan="2">Hashtags</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in data.names">
+                    <td ng-bind="item.name"></td>
+                    <td ng-bind="item.text"></td>
+                    <td ng-bind="item.hashtags"></td>
+                    <td><a ng-click="delete(item._id)" class="button">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

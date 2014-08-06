@@ -1,5 +1,5 @@
 angular.module('fnthanksmom')
-    .factory('Name', ['$resource', function($resource) {
+    .factory('NameService', ['$resource', function($resource) {
         return $resource('/api/names/:nameId', {}, {
             query: {
                 method: 'GET',

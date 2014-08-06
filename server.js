@@ -38,13 +38,14 @@ router.route('/names')
         });
     })
     .post(function(request, response) {
-        var name = new queueItem();
-        name.text = request.body.text;
-        name.hashtags = request.body.hashtags;
+        var item = new queueItem();
+        item.name = request.body.name;
+        item.text = request.body.text;
+        item.hashtags = request.body.hashtags;
 
         var context = {};
 
-        name.save(function(error) {
+        item.save(function(error) {
             if (error) {
                 context.result = "failure";
                 context.errors = [error];
@@ -61,30 +62,31 @@ router.route('/names')
 
 router.route('/names/:nameId')
     .get(function(request, response) {
-        queueItem.findById(request.params.nameId, function(error, name) {
+        queueItem.findById(request.params.nameId, function(error, item) {
             var context = {};
             if (error) {
                 context.errors = [error];
             }
             else {
                 context.result = "success";
-                context.data = name;
+                context.data = item;
             }
             response.json(context);
         });
     })
     .put(function(request, response) {
-        queueItem.findById(request.params.nameId, function(error, name) {
+        queueItem.findById(request.params.nameId, function(error, item) {
             var context = {};
             if (error) {
                 context.errors = [error];
                 response.json(context);
             }
             else {
-                name.text = request.body.text || name.text;
-                name.hashtags = request.body.hashtags || name.hashtags;
+                item.name = request.body.name || item.name;
+                item.text = request.body.text || item.text;
+                item.hashtags = request.body.hashtags || item.hashtags;
 
-                name.save(function(error) {
+                item.save(function(error) {
                     if (error) {
                         context.errors = [error];
                     }
@@ -93,7 +95,7 @@ router.route('/names/:nameId')
                         context.meta = {
                             message: "Changes saved successfully."
                         };
-                        context.data = name;
+                        context.data = item;
                     }
                     response.json(context);
                 });
@@ -111,12 +113,18 @@ router.route('/names/:nameId')
             }
             else {
                 context.result = "success";
-                context.data = name;
                 context.meta = {
                     message: "Successfully deleted."
                 };
             }
-            response.json(context);
+
+            queueItem.find(function(error, items) {
+                context.data = {
+                    names: items
+                };
+                response.json(context);    
+            });
+            
         });
     });
 
