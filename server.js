@@ -2,10 +2,11 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var async = require('async');
+var q = require('q');
 var db = require('./config/db')
-var NameItem = require('./app/models/NameItem');
-var QueueItem = require('./app/models/QueueItem');
-var validators = require('./app/modules/validators');
+var Tweet = require('./app/models/Tweet');
+var Queue = require('./app/models/Queue');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,48 +22,49 @@ router.use(function(request, response, next) {
     next();
 });
 
-router.route('/names')
+router.route('/tweets')
     .get(function(request, response) {
-        console.log();
-        NameItem.find(function(error, items){
-            var context = {};
+        var context = {
+            meta: {},
+            errors: [],
+            data: {}
+        };
 
-            var form = [];
+        async.parallel(
+            [
+                function(callback) {
+                    Queue.find(function(error, items) {
 
-            for (field in NameItem.schema.paths) {
-                if (NameItem.schema.paths.hasOwnProperty(field)) {
-                    forms.push(field);
+                        if (error) {
+                            context.errors.push(error);
+                        }
+                        else {
+                            context.data.queues = items;
+                        }
+                        callback(null);
+                    });
+                },
+                function(callback) {
+                    Tweet.find(function(error, items) {
+                        if (error) {
+                            context.errors.push(error);
+                        }
+                        else {
+                            context.data.tweets = items;
+                        }
+                        callback(null);
+                    });
                 }
-            };
-
-            context.data.form = form;
-
-            if (error) {
-                context.errors = [error];
+            ], 
+            function(error) {
                 response.json(context);
-            }
-            else {
-                QueueItem.find(function(error, queues) {
-                    if (error) {
-                        context.errors = [error];
-                    }
-                    else {
-                        context.data = {
-                            queues: queues,
-                            names: items
-                        };
-                    }
-                    response.json(context);
-                });
-            }
-
-        });
+            });
+        
     })
     .post(function(request, response) {
-        var item = new NameItem();
-        item.name = request.body.name;
+        var item = new Tweet();
+        item.queue = request.body.queue;
         item.text = request.body.text;
-        item.hashtags = validators.hashtags(request.body.hashtags);
 
         var context = {};
 
@@ -73,7 +75,7 @@ router.route('/names')
             }
             else {
                 context.data = {
-                    name: item
+                    tweet: item
                 };
                 context.meta = {
                     message: "Name saved successfully"
@@ -84,9 +86,9 @@ router.route('/names')
         });
     });
 
-router.route('/names/:nameId')
+router.route('/tweets/:tweetId')
     .get(function(request, response) {
-        NameItem.findById(request.params.nameId, function(error, item) {
+        Tweet.findById(request.params.nameId, function(error, item) {
             var context = {};
             if (error) {
                 context.errors = [error];
@@ -99,16 +101,14 @@ router.route('/names/:nameId')
         });
     })
     .put(function(request, response) {
-        NameItem.findById(request.params.nameId, function(error, item) {
+        Tweet.findById(request.params.tweetId, function(error, item) {
             var context = {};
             if (error) {
                 context.errors = [error];
                 response.json(context);
             }
             else {
-                item.name = request.body.name || item.name;
                 item.text = request.body.text || item.text;
-                item.hashtags = request.body.hashtags || item.hashtags;
 
                 item.save(function(error) {
                     if (error) {
@@ -127,8 +127,8 @@ router.route('/names/:nameId')
         });
     })
     .delete(function(request, response) {
-        NameItem.remove({
-            _id: request.params.nameId
+        Tweet.remove({
+            _id: request.params.tweetId
         }, function(error, name) {
             var context = {};
             if (error) {
@@ -142,9 +142,9 @@ router.route('/names/:nameId')
                 };
             }
 
-            NameItem.find(function(error, items) {
+            Tweet.find(function(error, items) {
                 context.data = {
-                    names: items
+                    tweets: items
                 };
                 response.json(context);    
             });

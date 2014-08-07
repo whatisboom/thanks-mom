@@ -1,51 +1,38 @@
-function NamesController($scope, $http) {
+function TweetsController($scope, $http) {
 
-    $scope.title = "@fnthanksmom"
+    $scope.title = "@fnthanksmom";
 
-    $scope.submitName = function() {
+    $scope.queueTweet = function() {
 
         var data = {
-            name: $scope.name,
             text: $scope.text,
-            hashtags: $scope.hashtags
+            queue: $scope.queue
         };
 
-        $http.post('/api/names', data)
+        $http.post('/api/tweets', data)
         .success(function(response, status, headers, config) {
-            $scope.data.names.push(response.data.name);
-            $scope.name = "";
+            $scope.data.tweets.push(response.data.tweet);
             $scope.text = "";
-            $scope.hashtags = "";
         });
 
     };
 
-    $scope.delete = function(nameId) {
+    $scope.deleteTweet = function(tweetId) {
         $http({
             method: "DELETE",
-            url: '/api/names/' + nameId
+            url: '/api/tweets/' + tweetId
         })
         .success(function(response, status, headers, config) {
             $scope.data = response.data;
         });
     };
 
-    $http.get('/api/names')
+    $http.get('/api/tweets')
     .success(function(response, status, headers, config) {
         $scope.data = response.data;
     });
 
 }
 
-function NameController($scope, $http) {
-
-    $scope.editName = function() {
-
-    };
-
-    $scope.title = "Editing ";
-}
-
 angular.module('fnthanksmom')
-    .controller('NamesController', ['$scope', '$http', NamesController])
-    .controller('NameController', ['$scope', '$http', NameController]);
+    .controller('NamesController', ['$scope', '$http', TweetsController]);

@@ -9,13 +9,9 @@ angular.module('fnthanksmom', [
         }
 
         $routeProvider
-            .when('/names',{
-                templateUrl: '/public/partials/names.html',
-                controller: 'NamesController'
-            })
-            .when('/names/:nameId',{
-                templateUrl: '/public/partials/name.html',
-                controller: 'NameController'
+            .when('/tweets',{
+                templateUrl: '/public/partials/tweets.html',
+                controller: 'TweetsController'
             })
             .otherwise({
                 redirectTo: '/'
