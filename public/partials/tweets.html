@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="columns small-12">
+        <h1>{{title}}</h1>
+    </div>
+</div>
+
+<form ng-submit="queueTweet()">
+    <div class="row">
+        <div class="columns small-12 medium-10">
+            <input class="radius" placeholder="Text" type="text" ng-model="text" name="text"/>
+        </div>
+        <div class="columns small-12 medium-2">
+            <button class="radius small right">Submit</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="columns small-12">
+            <select ng-model="queue" name="queue">
+                <option ng-repeat="queue in data.queues" value="{{queue.name}}">{{queue.name}}</option>
+            </select>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="columns small-12">
+        <table class="columns small-12">
+            <thead>
+                <tr>
+                    <th colspan="2">Tweet</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in data.tweets">
+                    <td ng-bind="item.text"></td>
+                    <td><a ng-click="deleteTweet(item._id)" class="small right button radius">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
