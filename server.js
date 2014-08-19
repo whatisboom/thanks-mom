@@ -63,7 +63,7 @@ router.route('/tweets')
     })
     .post(function(request, response) {
         var item = new Tweet();
-        console.log(request.body);
+        
         item.queue_id = request.body.queue_id;
         item.text = request.body.text;
 

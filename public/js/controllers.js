@@ -1,6 +1,15 @@
-function TweetsController($scope, $http) {
+var TweetsController = function($scope, $http, $modal) {
 
     $scope.title = "@fnthanksmom";
+
+    $scope.openModal = function(template) {
+
+        var modalInstance = $modal.open({
+            templateUrl: '/public/partials/modals' + template + '.html',
+            controller: ModalInstanceController
+        });
+
+    };
 
     $scope.queueTweet = function() {
 
@@ -33,7 +42,11 @@ function TweetsController($scope, $http) {
         $scope.data = response.data;
     });
 
+};
+
+var ModalInstanceController = function($scope, $modalInstance) {
+    
 }
 
 angular.module('fnthanksmom')
-    .controller('NamesController', ['$scope', '$http', TweetsController]);
+    .controller('NamesController', ['$scope', '$http', '$modal', TweetsController]);
