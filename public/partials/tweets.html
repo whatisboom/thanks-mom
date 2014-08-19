@@ -15,12 +15,18 @@
     </div>
     <div class="row">
         <div class="columns small-12">
-            <select ng-model="queue" name="queue">
-                <option ng-repeat="queue in data.queues" value="{{queue.name}}">{{queue.name}}</option>
+            <select ng-model="queue_id" name="queue_id">
+                <option ng-repeat="queue in data.queues" value="{{queue._id}}">{{queue.name}}</option>
             </select>
         </div>
     </div>
 </form>
+
+<div class="row">
+    <div class="columns small-12">
+        <button ng-click="" class="radius small right">Add New Queue</button>
+    </div>
+</div>
 
 <div class="row">
     <div class="columns small-12">

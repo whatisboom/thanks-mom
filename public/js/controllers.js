@@ -6,13 +6,14 @@ function TweetsController($scope, $http) {
 
         var data = {
             text: $scope.text,
-            queue: $scope.queue
+            queue_id: $scope.queue_id
         };
 
         $http.post('/api/tweets', data)
         .success(function(response, status, headers, config) {
             $scope.data.tweets.push(response.data.tweet);
             $scope.text = "";
+            $scope.queue_id = "";
         });
 
     };
