@@ -1,5 +1,6 @@
 angular.module('fnthanksmom', [
-    'ngRoute'
+    'ngRoute',
+    'mm.foundation'
 ])
 .config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {

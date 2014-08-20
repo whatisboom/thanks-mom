@@ -63,7 +63,7 @@ router.route('/tweets')
     })
     .post(function(request, response) {
         var item = new Tweet();
-        
+
         item.queue_id = request.body.queue_id;
         item.text = request.body.text;
 
@@ -153,6 +153,36 @@ router.route('/tweets/:tweetId')
         });
     });
 
+
+router.route('/queues')
+    .get(function(request, response) {
+
+    })
+    .post(function(request, response) {
+        var queue = new Queue();
+
+        queue.name = request.body.name;
+        queue.hashtags.content = request.body.hashtags;
+        queue.hashtags.length = request.body.hashtags.length;
+
+        var context = {};
+
+        queue.save(function(error){
+            if (error) {
+                context.errors = [error];
+            }
+            else {
+                context.data = {
+                    queue: queue
+                };
+                context.meta = {
+                    message: "Queue added successfully"
+                };
+            }
+            response.json(context);
+        });
+
+    });
 app.use('/api', router);
 
 app.use('/public', express.static(__dirname + '/public'));

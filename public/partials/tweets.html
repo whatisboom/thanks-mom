@@ -7,7 +7,7 @@
 <form ng-submit="queueTweet()">
     <div class="row">
         <div class="columns small-12 medium-10">
-            <input class="radius" placeholder="Text" type="text" ng-model="text" name="text"/>
+            <input class="radius" placeholder="Text" type="text" ng-required ng-model="text" name="text"/>
         </div>
         <div class="columns small-12 medium-2">
             <button class="radius small right">Submit</button>
@@ -15,8 +15,8 @@
     </div>
     <div class="row">
         <div class="columns small-12">
-            <select ng-model="queue_id" name="queue_id">
-                <option ng-repeat="queue in data.queues" value="{{queue._id}}">{{queue.name}}</option>
+            <select ng-model="queue_id" ng-change="debug()" ng-required ng-options="queue.id as queue.name for queue in data.queues" name="queue_id">
+                <option value="{{queue.id}}">{{queue.name}}</option>
             </select>
         </div>
     </div>
@@ -24,11 +24,12 @@
 
 <div class="row">
     <div class="columns small-12">
-        <button ng-click="openModal('addQueue')" class="radius small right">Add New Queue</button>
+        <button ng-click="openAddQueueModal()" class="radius small right">Add New Queue</button>
+        <a ng-click="openManageQueuesModal()" class="button secondary radius small right">Manage Queues</a>
     </div>
 </div>
 
-<div class="row">
+<div class="row" ng-show="data.tweets.length">
     <div class="columns small-12">
         <table class="columns small-12">
             <thead>

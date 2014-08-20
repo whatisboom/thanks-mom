@@ -2,13 +2,26 @@ var TweetsController = function($scope, $http, $modal) {
 
     $scope.title = "@fnthanksmom";
 
-    $scope.openModal = function(template) {
+    $scope.debug = function() {
+        console.log($scope.queue_id);
+    }
+
+    $scope.openAddQueueModal = function() {
 
         var modalInstance = $modal.open({
-            templateUrl: '/public/partials/modals' + template + '.html',
-            controller: ModalInstanceController
+            templateUrl: '/public/partials/modals/addQueue.html',
+            controller: ['$scope', '$modalInstance', '$http', addQueuesModalInstanceController],
+            scope: $scope
         });
 
+    };
+
+    $scope.openManageQueuesModal = function() {
+
+        var modalInstance = $modal.open({
+            templateUrl: '/public/partials/modals/manageQueues.html',
+            controller: ['$scope', '$modalInstance', '$http', manageQueuesModalInstanceController]
+        });
     };
 
     $scope.queueTweet = function() {
@@ -33,7 +46,7 @@ var TweetsController = function($scope, $http, $modal) {
             url: '/api/tweets/' + tweetId
         })
         .success(function(response, status, headers, config) {
-            $scope.data = response.data;
+            $scope.data.tweets = response.data.tweets;
         });
     };
 
@@ -44,7 +57,29 @@ var TweetsController = function($scope, $http, $modal) {
 
 };
 
-var ModalInstanceController = function($scope, $modalInstance) {
+var addQueuesModalInstanceController = function($scope, $modalInstance, $http) {
+
+    $scope.newQueue = {};
+
+    $scope.addQueue = function() {
+
+        var data = $scope.newQueue;
+
+        $http.post('/api/queues', data)
+        .success(function(response, status, headers, config) {
+            if (typeof $scope.data.queues === 'object') {
+                $scope.data.queues.push(response.data.queue);
+            }
+            else {
+                $scope.data.queues = [response.data.queue];
+            }
+            $scope.queue_id = $scope.data.queues.length;
+            $modalInstance.close(response.data.queue);
+        })
+        .error(function() {
+            console.log(arguments);
+        });
+    };
     
 }
 
