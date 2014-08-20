@@ -157,6 +157,23 @@ router.route('/tweets/:tweetId')
 router.route('/queues')
     .get(function(request, response) {
 
+        var context = {
+            meta: {},
+            errors: [],
+            data: {}
+        };
+
+        Queue.find(function(error, items) {
+
+            if (error) {
+                context.errors.push(error);
+            }
+            else {
+                context.data.queues = items;
+            }
+            response.json(context);
+        });
+
     })
     .post(function(request, response) {
         var queue = new Queue();

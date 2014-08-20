@@ -14,6 +14,10 @@ angular.module('fnthanksmom', [
                 templateUrl: '/public/partials/tweets.html',
                 controller: 'TweetsController'
             })
+             .when('/queues',{
+                templateUrl: '/public/partials/queues.html',
+                controller: 'QueuesController'
+            })
             .otherwise({
                 redirectTo: '/'
             });

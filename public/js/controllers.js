@@ -16,14 +16,6 @@ var TweetsController = function($scope, $http, $modal) {
 
     };
 
-    $scope.openManageQueuesModal = function() {
-
-        var modalInstance = $modal.open({
-            templateUrl: '/public/partials/modals/manageQueues.html',
-            controller: ['$scope', '$modalInstance', '$http', manageQueuesModalInstanceController]
-        });
-    };
-
     $scope.queueTweet = function() {
 
         var data = {
@@ -81,7 +73,19 @@ var addQueuesModalInstanceController = function($scope, $modalInstance, $http) {
         });
     };
     
-}
+};
+
+var QueuesController = function($scope, $http, $modal) {
+    $scope.title = "@fnthanksmom's Queue's";
+
+    $http.get('/api/queues')
+    .success(function(response, status, headers, config) {
+
+        $scope.data = response.data;
+
+    });
+};
 
 angular.module('fnthanksmom')
-    .controller('NamesController', ['$scope', '$http', '$modal', TweetsController]);
+    .controller('TweetsController', ['$scope', '$http', '$modal', TweetsController])
+    .controller('QueuesController', ['$scope', '$http', QueuesController]);
