@@ -205,7 +205,7 @@ app.use('/api', router);
 app.use('/public', express.static(__dirname + '/public'));
 
 app.use('*', function(request, response) {
-    response.sendfile('./public/index.html');
+    response.sendFile(process.cwd() + '/public/index.html');
 });
 
 app.listen(port);
