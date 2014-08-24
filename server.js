@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var async = require('async');
+var extend = require('extend');
 var q = require('q');
 var db = require('./config/db')
 var Tweet = require('./app/models/Tweet');
@@ -62,10 +63,10 @@ router.route('/tweets')
         
     })
     .post(function(request, response) {
-        var item = new Tweet();
+        var item = extend(new Tweet(), request.body.tweet);
 
-        item.queue_id = request.body.queue_id;
-        item.text = request.body.text;
+        //item.queue_id = .queue_id;
+        //item.text = request.body.tweet.text;
 
         var context = {};
 

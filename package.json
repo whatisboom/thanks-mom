@@ -12,6 +12,8 @@
     "q": "^1.0.1",
     "express": "^4.8.5",
     "mongoose": "3.8",
-    "body-parser": "^1.6.5"
+    "body-parser": "^1.6.5",
+    "cron": "^1.0.4",
+    "extend": "^1.3.0"
   }
 }

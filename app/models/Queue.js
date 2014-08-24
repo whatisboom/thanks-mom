@@ -6,7 +6,8 @@ var QueueSchema = new Schema({
     hashtags: {
         content: String,
         length: Number
-    }
+    },
+    interval: String
 });
 
 module.exports = mongoose.model('Queue', QueueSchema);
