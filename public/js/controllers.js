@@ -46,7 +46,9 @@ var TweetsController = function($scope, $http, $modal) {
 
 var addQueuesModalInstanceController = function($scope, $modalInstance, $http) {
 
-    $scope.newQueue = {};
+    $scope.newQueue = {
+        hashtags: {}
+    };
 
     $scope.debug = function() {
         console.log($scope.newQueue.interval);

@@ -182,7 +182,8 @@ router.route('/queues')
         var queue = new Queue();
 
         var queue = extend(new Queue(), request.body.queue);
-        queue.hashtags.length = request.body.queue.hashtags.length;
+        console.log(request.body.queue);
+        queue.hashtags.length = request.body.queue.hashtags.content.length;
         //queue.name = request.body.name;
         //queue.hashtags.content = request.body.hashtags;
         
