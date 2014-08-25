@@ -5,14 +5,14 @@ var mongoose = require('mongoose');
 var async = require('async');
 var extend = require('extend');
 var q = require('q');
+var cron = require('cron').CronJob;
+
 var db = require('./config/db')
 var Tweet = require('./app/models/Tweet');
 var Queue = require('./app/models/Queue');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-var port = process.env.PORT || 8888;
 
 var router = express.Router();
 
@@ -160,7 +160,6 @@ router.route('/tweets/:tweetId')
         });
     });
 
-
 router.route('/queues')
     .get(function(request, response) {
 
@@ -184,9 +183,6 @@ router.route('/queues')
         var queue = extend(new Queue(), request.body.queue);
         console.log(request.body.queue);
         queue.hashtags.length = request.body.queue.hashtags.content.length;
-        //queue.name = request.body.name;
-        //queue.hashtags.content = request.body.hashtags;
-        
 
         var context = initContext();
 
@@ -214,5 +210,14 @@ app.use('*', function(request, response) {
     response.sendFile(process.cwd() + '/public/index.html');
 });
 
-app.listen(port);
+app.listen( process.env.PORT || 8888 );
 
+/*Queue.find(function(error, queues) {
+    var crons = [];
+    for (var i = queues.length; i > 0; i--) {
+        crons[i] = new cron(queues[i].interval, function() {
+            console.log('cron tick');
+        });
+        crons[i].start();
+    }
+});*/
