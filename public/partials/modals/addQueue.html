@@ -10,9 +10,7 @@
     </div>
     <div class="row">
         <div class="columns small-6">
-            <select ng-model="newQueue.interval" ng-change="debug()" ng-required ng-options="interval.value as interval.label for interval in intervals" name="queueInterval">
-                <option value="{{interval.value}}">{{interval.label}}</option>
-            </select>
+            <select ng-model="newQueue.interval" ng-change="debug()" ng-required ng-options="interval.value as interval.label for interval in intervals" name="queueInterval"></select>
         </div>
         <div class="columns small-6">
             <button class="radius small right">Add Queue</button>

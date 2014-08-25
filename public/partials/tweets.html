@@ -15,9 +15,7 @@
     </div>
     <div class="row">
         <div class="columns small-12">
-            <select ng-model="tweet.queue_id" ng-change="debug()" ng-required ng-options="queue.id as queue.name for queue in data.queues" name="queue_id">
-                <option value="{{queue.id}}">{{queue.name}}</option>
-            </select>
+            <select ng-model="tweet.queue_id" ng-change="debug()" ng-required ng-options="queue.id as queue.name for queue in data.queues" name="queue_id"></select>
         </div>
     </div>
 </form>
