@@ -23,35 +23,40 @@ router.use(function(request, response, next) {
     next();
 });
 
+function initContext() {
+    var context = {
+        meta: {},
+        errors: [],
+        data: {}
+    };
+    return context;
+}
+
 router.route('/tweets')
     .get(function(request, response) {
-        var context = {
-            meta: {},
-            errors: [],
-            data: {}
-        };
+        var context = initContext();
 
         async.parallel(
             [
                 function(callback) {
-                    Queue.find(function(error, items) {
+                    Queue.find(function(error, queues) {
 
                         if (error) {
                             context.errors.push(error);
                         }
                         else {
-                            context.data.queues = items;
+                            context.data.queues = queues;
                         }
                         callback(null);
                     });
                 },
                 function(callback) {
-                    Tweet.find(function(error, items) {
+                    Tweet.find(function(error, tweets) {
                         if (error) {
                             context.errors.push(error);
                         }
                         else {
-                            context.data.tweets = items;
+                            context.data.tweets = tweets;
                         }
                         callback(null);
                     });
@@ -63,21 +68,18 @@ router.route('/tweets')
         
     })
     .post(function(request, response) {
-        var item = extend(new Tweet(), request.body.tweet);
+        var tweet = extend(new Tweet(), request.body.tweet);
 
-        //item.queue_id = .queue_id;
-        //item.text = request.body.tweet.text;
+        var context = initContext();
 
-        var context = {};
-
-        item.save(function(error) {
+        tweet.save(function(error) {
             if (error) {
                 context.result = "failure";
-                context.errors = [error];
+                context.errors.push(error);
             }
             else {
                 context.data = {
-                    tweet: item
+                    tweet: tweet
                 };
                 context.meta = {
                     message: "Name saved successfully"
@@ -91,9 +93,10 @@ router.route('/tweets')
 router.route('/tweets/:tweetId')
     .get(function(request, response) {
         Tweet.findById(request.params.nameId, function(error, item) {
-            var context = {};
+            var context = initContext();
+
             if (error) {
-                context.errors = [error];
+                context.errors.push(error);
             }
             else {
                 context.result = "success";
@@ -103,25 +106,28 @@ router.route('/tweets/:tweetId')
         });
     })
     .put(function(request, response) {
-        Tweet.findById(request.params.tweetId, function(error, item) {
-            var context = {};
+
+        //make this async
+
+        Tweet.findById(request.params.tweetId, function(error, tweet) {
+            var context = initContext();
             if (error) {
-                context.errors = [error];
+                context.errors.push(error);
                 response.json(context);
             }
             else {
-                item.text = request.body.text || item.text;
+                tweet.text = request.body.text || tweet.text;
 
-                item.save(function(error) {
+                tweet.save(function(error) {
                     if (error) {
-                        context.errors = [error];
+                        context.errors.push(error);
                     }
                     else {
                         context.result = "success";
                         context.meta = {
                             message: "Changes saved successfully."
                         };
-                        context.data = item;
+                        context.data = tweet;
                     }
                     response.json(context);
                 });
@@ -132,10 +138,10 @@ router.route('/tweets/:tweetId')
         Tweet.remove({
             _id: request.params.tweetId
         }, function(error, name) {
-            var context = {};
+            var context = initContext();
             if (error) {
                 context.result = "failure";
-                context.errors = [error];
+                context.errors.push(error);
             }
             else {
                 context.result = "success";
@@ -144,9 +150,9 @@ router.route('/tweets/:tweetId')
                 };
             }
 
-            Tweet.find(function(error, items) {
+            Tweet.find(function(error, tweets) {
                 context.data = {
-                    tweets: items
+                    tweets: tweets
                 };
                 response.json(context);    
             });
@@ -158,19 +164,15 @@ router.route('/tweets/:tweetId')
 router.route('/queues')
     .get(function(request, response) {
 
-        var context = {
-            meta: {},
-            errors: [],
-            data: {}
-        };
+        var context = initContext();
 
-        Queue.find(function(error, items) {
+        Queue.find(function(error, queues) {
 
             if (error) {
                 context.errors.push(error);
             }
             else {
-                context.data.queues = items;
+                context.data.queues = queues;
             }
             response.json(context);
         });
@@ -179,15 +181,17 @@ router.route('/queues')
     .post(function(request, response) {
         var queue = new Queue();
 
-        queue.name = request.body.name;
-        queue.hashtags.content = request.body.hashtags;
-        queue.hashtags.length = request.body.hashtags.length;
+        var queue = extend(new Queue(), request.body.queue);
+        queue.hashtags.length = request.body.queue.hashtags.length;
+        //queue.name = request.body.name;
+        //queue.hashtags.content = request.body.hashtags;
+        
 
-        var context = {};
+        var context = initContext();
 
         queue.save(function(error){
             if (error) {
-                context.errors = [error];
+                context.errors.push(error);
             }
             else {
                 context.data = {
@@ -210,3 +214,4 @@ app.use('*', function(request, response) {
 });
 
 app.listen(port);
+

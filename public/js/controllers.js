@@ -65,7 +65,9 @@ var addQueuesModalInstanceController = function($scope, $modalInstance, $http) {
 
     $scope.addQueue = function() {
 
-        var data = $scope.newQueue;
+        var data = {
+            queue: $scope.newQueue
+        };
 
         $http.post('/api/queues', data)
         .success(function(response, status, headers, config) {
