@@ -6,24 +6,40 @@
 
 <form ng-submit="queueTweet()">
     <div class="row">
-        <div class="columns small-12 medium-10">
-            <input class="radius" placeholder="Text" type="text" ng-required ng-model="tweet.text" name="text"/>
-        </div>
-        <div class="columns small-12 medium-2">
-            <button class="radius small right">Submit</button>
-        </div>
-    </div>
-    <div class="row">
         <div class="columns small-12">
-            <select ng-model="tweet.queue_id" ng-change="debug()" ng-required ng-options="queue.id as queue.name for queue in data.queues" name="queue_id"></select>
+            <fieldset>
+            <legend>
+                Schedule a Tweet
+            </legend>
+            <div class="row">
+                <div class="columns small-12">
+                    <div class="row collapse">
+                        <div class="columns small-10 medium-8">
+                            <input class="radius" placeholder="Tweet Text" type="text" ng-required ng-model="tweet.text" name="text"/>
+                        </div>
+                        <div class="columns small-2 medium-2">
+                            <span class="postfix">47/140</span>
+                        </div>
+                        <div class="columns small-12 medium-2">
+                            <button class="radius small right">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="columns small-12">
+                    <select ng-model="tweet.queue_id" ng-change="debug()" ng-required ng-options="queue.id as queue.name for queue in data.queues" name="queue_id"></select>
+                </div>
+            </div>
+        </fieldset>  
         </div>
     </div>
 </form>
 
 <div class="row">
     <div class="columns small-12">
-        <button ng-click="openAddQueueModal()" class="radius small right">Add New Queue</button>
-        <a ng-href="/queues" class="button secondary radius small right">Manage Queues</a>
+        <button ng-click="openAddQueueModal()" class="radius small">Add New Queue</button>
+        <a ng-href="/queues" class="button secondary radius small">Manage Queues</a>
     </div>
 </div>
 

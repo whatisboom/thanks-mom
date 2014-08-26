@@ -7,7 +7,11 @@ var QueueSchema = new Schema({
         content: String,
         length: Number
     },
-    interval: String
+    interval: String,
+    dayOfWeek: Number,
+    hourOfDay: Number,
+    minuteOfHour: Number,
+    secondOfMinute: Number
 });
 
 module.exports = mongoose.model('Queue', QueueSchema);

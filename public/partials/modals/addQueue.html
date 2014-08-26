@@ -14,9 +14,35 @@
     </div>
     <div class="row">
         <div class="columns small-6">
-            <select ng-model="newQueue.interval" ng-change="debug()" ng-required ng-options="interval.value as interval.label for interval in intervals" name="queueInterval"></select>
+            <label>
+                Interval:
+                <select ng-model="newQueue.interval" ng-required ng-options="interval for interval in ['Weekly', 'Daily', 'Hourly']" name="queueInterval"></select>
+            </label>
         </div>
+    </div>
+    <div class="row">
         <div class="columns small-6">
+            <label ng-show="newQueue.interval == 'Weekly'">
+                Day of Week:
+                <select ng-model="newQueue.dayOfWeek" ng-options="day for day in daysOfWeek"></select>
+            </label>
+        </div>
+        <div class="columns small-3">
+            <label ng-show="newQueue.interval == 'Weekly' || newQueue.interval == 'Daily'">
+                Hour of Day:
+                <select ng-model="newQueue.hourOfDay" ng-options="hour for hour in hoursOfDay"></select>
+            </label>
+        </div>
+        <div class="columns small-3">
+            <label ng-show="newQueue.interval">
+                Minute of Hour:
+                <select ng-model="newQueue.minuteOfHour" ng-options="minute for minute in minutesOfHour"></select>
+            </label>
+        </div>
+        <div class="columns"></div>
+    </div>
+    <div class="row">
+        <div class="columns small-12">
             <button class="radius small right">Add Queue</button>
         </div>
     </div>
