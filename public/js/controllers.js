@@ -1,6 +1,11 @@
 var TweetsController = function($scope, $http, $modal) {
 
     $scope.title = "@fnthanksmom";
+    $scope.tweet = {};
+
+    $scope.debug = function() {
+        console.log($scope.queues);
+    };
 
     $scope.openAddQueueModal = function() {
 
@@ -21,8 +26,8 @@ var TweetsController = function($scope, $http, $modal) {
         $http.post('/api/tweets', data)
         .success(function(response, status, headers, config) {
             $scope.data.tweets.push(response.data.tweet);
-            $scope.text = "";
-            $scope.queue_id = "";
+            $scope.tweet.text = "";
+            $scope.tweet.queue_id = "";
         });
 
     };
@@ -51,7 +56,7 @@ var addQueuesModalInstanceController = function($scope, $modalInstance, $http) {
     };
 
     $scope.debug = function() {
-        console.log($scope.newQueue.interval == 'Weekly');
+        console.log($scope.newQueue);
     }
 
     $scope.intervals = ['Weekly', 'Daily', 'Hourly'];

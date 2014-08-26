@@ -18,7 +18,7 @@
                             <input class="radius" placeholder="Tweet Text" type="text" ng-required ng-model="tweet.text" name="text"/>
                         </div>
                         <div class="columns small-2 medium-2">
-                            <span class="postfix">47/140</span>
+                            <span class="postfix">{{ tweet.text.length || 0 }}/140</span>
                         </div>
                         <div class="columns small-12 medium-2">
                             <button class="radius small right">Submit</button>
