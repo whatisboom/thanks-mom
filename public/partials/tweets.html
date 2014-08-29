@@ -1,9 +1,6 @@
 <div class="row">
     <div class="columns small-6">
-        <h1 ng-bind="activeAccount.name"></h1>
-    </div>
-    <div class="columns small-6">
-        <select ng-change="switchAccount()" ng-model="activeAccount" ng-options="account.name for account in accounts"></select>
+        <h1 ng-bind="account.name"></h1>
     </div>
 </div>
 
