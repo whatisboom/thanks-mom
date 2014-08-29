@@ -17,7 +17,17 @@
 </head>
 <body>
 
-<div class="content" ng-view></div>
+<div class="row">
+    <div class="columns small-3">
+        <ul class="side-nav">
+            <li><a href="/tweets">Twitter</a></li>
+            <li><a href="/reddit">Reddit</a></li>
+        </ul>
+    </div>
+    <div class="columns small-9">
+        <div class="content" ng-view></div>
+    </div>
+</div>
 
 </body>
 </html>
