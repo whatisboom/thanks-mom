@@ -10,11 +10,11 @@ angular.module('fnthanksmom', [
         }
 
         $routeProvider
-            .when('/tweets',{
+            .when('/twitter',{
                 templateUrl: '/public/partials/tweets.html',
                 controller: 'TweetsController'
             })
-             .when('/queues',{
+            .when('/queues',{
                 templateUrl: '/public/partials/queues.html',
                 controller: 'QueuesController'
             })
