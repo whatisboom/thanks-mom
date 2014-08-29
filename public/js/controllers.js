@@ -103,11 +103,20 @@ var QueuesController = function($scope, $http, $modal) {
 
 var NavController = function($scope, $location) {
     $scope.isActive = function (viewLocation) { 
-        return $location.path().indexOf(viewLocation) === 0;
+        var pattern = new RegExp('^' + viewLocation + '$');
+        return pattern.test($location.path(),['i']);
     };
 };
 
 angular.module('fnthanksmom')
     .controller('NavController', ['$scope', '$location', NavController])
     .controller('TweetsController', ['$scope', '$http', '$modal', TweetsController])
-    .controller('QueuesController', ['$scope', '$http', QueuesController]);
+    .controller('QueuesController', ['$scope', '$http', QueuesController])
+    .factory('Page', function() {
+        var breadcrumbs = [
+            {
+                text: "",
+                href: ""
+            }
+        ];
+    });
