@@ -2,9 +2,14 @@ var TweetsController = function($scope, $http, $modal) {
 
     $scope.title = "@fnthanksmom";
     $scope.tweet = {};
+    $scope.accounts = [{'name':'whatisboom'},{'name':'fnthanksmom'}];
 
     $scope.debug = function() {
-        console.log($scope.queues);
+        console.log($scope.tweet.queue);
+    };
+
+    $scope.switchAccount = function() {
+        console.log($scope.activeAccount);
     };
 
     $scope.openAddQueueModal = function() {
@@ -100,6 +105,13 @@ var QueuesController = function($scope, $http, $modal) {
     });
 };
 
+var NavController = function($scope, $location) {
+    $scope.isActive = function (viewLocation) { 
+        return viewLocation === $location.path();
+    };
+};
+
 angular.module('fnthanksmom')
+    .controller('NavController', ['$scope', '$location', NavController])
     .controller('TweetsController', ['$scope', '$http', '$modal', TweetsController])
     .controller('QueuesController', ['$scope', '$http', QueuesController]);

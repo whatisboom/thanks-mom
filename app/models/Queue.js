@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var QueueSchema = new Schema({
     name: String,
+    account: String,
     hashtags: {
         content: String,
         length: Number
