@@ -29,6 +29,9 @@ app.use(
     )
 );
 
+app.use(passport.initialize());
+app.use(password.session());
+
 passport.use(new TwitterStrategy(
     {
         consumerKey: twitterApi.consumerKey,
@@ -36,7 +39,7 @@ passport.use(new TwitterStrategy(
         callbackURL: twitterApi.callbackURL
     },
     function(token, tokenSecret, profile, done) {
-        console.log(token, tokenSecret, profile);
+        console.log(profile);
         done(null, profile);
     }
 ));
