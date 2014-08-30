@@ -35,10 +35,10 @@ passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-    console.log('deserialize'+ id);
+/*passport.deserializeUser(function(id, done) {
+    //console.log('deserialize'+ id);
     done(id);
-});
+});*/
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -50,7 +50,7 @@ passport.use(new TwitterStrategy(
         callbackURL: twitterApi.callbackURL
     },
     function(token, tokenSecret, profile, done) {
-        console.log('output?' + profile.id);
+        //console.log('output? ' + profile.id);
         done(null, profile);
     }
 ));
@@ -226,7 +226,7 @@ router.route('/queues')
         var queue = new Queue();
 
         var queue = extend(new Queue(), request.body.queue);
-        console.log(request.body.queue);
+        //console.log(request.body.queue);
         queue.hashtags.length = request.body.queue.hashtags.content.length;
 
         var context = initContext();
