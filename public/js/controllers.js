@@ -1,6 +1,37 @@
-var TweetsController = function($scope, $http, $modal) {
+var AppController = function($scope, Page) {
 
-    $scope.title = "@fnthanksmom";
+    $scope.Page = Page;
+
+};
+
+var IndexController = function($scope, Page) {
+    Page.setTitle('BASE APP I DONT KNOW WHAT GOES HERE');
+    Page.clearBreadcrumbs();
+};
+
+var TwitterController = function($scope, Page) {
+    Page.setTitle('Twitter Profiles');
+    Page.setBreadcrumbs([
+        {
+            text: 'Twitter',
+            href: '/twitter'
+        }
+    ]);
+};
+
+var TwitterScheduleController = function($scope, $http, $modal, Page) {
+
+    Page.setTitle("@fnthanksmom");
+    Page.setBreadcrumbs([
+        {
+            text: 'Twitter',
+            href: '/twitter'
+        },
+        {
+            text: 'Schedule',
+            href: '/twitter/schedule'
+        }
+    ]);
     $scope.tweet = {};
     $scope.account = {'name':'fnthanksmom'};
 
@@ -109,14 +140,24 @@ var NavController = function($scope, $location) {
 };
 
 angular.module('fnthanksmom')
+    .controller('AppController', ['$scope', 'Page', AppController])
     .controller('NavController', ['$scope', '$location', NavController])
-    .controller('TweetsController', ['$scope', '$http', '$modal', TweetsController])
+    .controller('IndexController', ['$scope', 'Page', IndexController])
+    .controller('TwitterController', ['$scope', 'Page', TwitterController])
+    .controller('TwitterScheduleController', ['$scope', '$http', '$modal', 'Page', TwitterScheduleController])
     .controller('QueuesController', ['$scope', '$http', QueuesController])
     .factory('Page', function() {
-        var breadcrumbs = [
-            {
-                text: "",
-                href: ""
-            }
-        ];
+        var home = [{
+            text: "Home",
+            href: "/"
+        }];
+        var breadcrumbs = home;
+        var title = "";
+        return {
+            breadcrumbs: function() { return breadcrumbs; },
+            setBreadcrumbs: function(newBreadcrumbs) { breadcrumbs = home.concat(newBreadcrumbs); },
+            clearBreadcrumbs: function(newBreadcrumbs) { breadcrumbs = home; },
+            title: function() { return title; },
+            setTitle: function(newTitle) { title = newTitle; }
+        }
     });

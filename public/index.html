@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html ng-app="fnthanksmom">
+<html ng-app="fnthanksmom" ng-controller="AppController">
 <head>
-    <title>Thanks Mom</title>
+    <title ng-bind="Page.title()"></title>
     <link rel="stylesheet" type="text/css" href="/public/bower_components/foundation/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="/public/bower_components/foundation/css/foundation.css">
     <link rel="stylesheet" type="text/css" href="/public/css/app.css">
@@ -20,13 +20,29 @@
 <div class="row">
     <div class="columns small-3">
         <ul class="side-nav" ng-controller="NavController">
-            <li ng-class="{ active: isActive('/twitter')}"><a href="/twitter">Twitter</a></li>
-            <li ng-class="{ active: isActive('/reddit')}"><a href="/reddit">Reddit</a></li>
-            <li ng-class="{ active: isActive('/facebook')}"><a href="/facebook">Facebook</a></li>
+            <li class="heading" ng-class="{ active: isActive('/twitter')}"><a href="/twitter">Twitter</a></li>
+            <li ng-class="{ active: isActive('/twitter/schedule')}"><a href="/twitter/schedule">Schedule</a></li>
+            <li ng-class="{ active: isActive('/twitter/interact')}"><a href="/twitter/interact">Interact</a></li>
+            <li class="heading" ng-class="{ active: isActive('/reddit')}"><a href="/reddit">Reddit</a></li>
+            <li class="heading" ng-class="{ active: isActive('/facebook')}"><a href="/facebook">Facebook</a></li>
         </ul>
     </div>
     <div class="columns small-9">
-        <div class="content" ng-view></div>
+        <div class="row">
+            <div class="columns small-12">
+                <h1 ng-bind="Page.title()"></h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns small-12">
+                <nav class="breadcrumbs" ng-controller="NavController">
+                    <a ng-class="{ current: isActive(breadcrumb.href)}" ng-bind="breadcrumb.text" ng-href="{{ breadcrumb.href }}" ng-repeat="breadcrumb in Page.breadcrumbs()"></a>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns small-12" ng-view></div>
+        </div>
     </div>
 </div>
 
