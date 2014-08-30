@@ -89,7 +89,7 @@ router.route('/tweets')
     .get(function(request, response) {
         var context = initContext();
 
-        console.log(request.user);
+        context.meta = { user: request.user || 'wat' };
 
         async.parallel(
             [

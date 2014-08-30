@@ -76,6 +76,8 @@ var TwitterScheduleController = function($scope, $http, $modal, Page) {
 
     $http.get('/api/tweets')
     .success(function(response, status, headers, config) {
+        console.log(response.meta);
+        $scope.meta = response.meta;
         $scope.data = response.data;
     });
 
