@@ -2,6 +2,7 @@ var express = require('express');
 var session = require('express-session');
 var app = express();
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
 var async = require('async');
 var extend = require('extend');
@@ -19,7 +20,7 @@ var Queue = require('./app/models/Queue');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.cookieParser(secret));
+app.use(cookieParser(secret));
 app.use(
     session(
         {
