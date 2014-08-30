@@ -50,8 +50,8 @@ passport.use(new TwitterStrategy(
         callbackURL: twitterApi.callbackURL
     },
     function(token, tokenSecret, profile, done) {
-        console.log(profile.id);
-        done(null, profile);
+        console.log('output?' + profile.id);
+        done(null, profile.id);
     }
 ));
 
