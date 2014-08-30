@@ -257,6 +257,7 @@ app.use('/api', router);
 app.use('/public', express.static(__dirname + '/public'));
 
 app.use('*', function(request, response) {
+    console.log(request.user);
     response.sendFile(process.cwd() + '/public/index.html');
 });
 
