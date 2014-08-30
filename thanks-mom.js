@@ -54,8 +54,14 @@ passport.use(new TwitterStrategy(
         callbackURL: twitterApi.callbackURL
     },
     function(token, tokenSecret, profile, done) {
-        User.findOrCreate({ id: profile.id }, function(error, user, craeted) {
+        User.findOrCreate({ id: profile.id }, function(error, user, created) {
             if (error) { return done(err); }
+            if (created) {
+                console.log("Created user: ", user);
+            }
+            else {
+                console.log("Found user: ", user);
+            }
             done(null, user);
         });
     }
