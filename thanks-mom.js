@@ -258,7 +258,7 @@ app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback', passport.authenticate('twitter', {successRedirect: '/twitter', failureRedirect: '/login'}));
 
 app.use('*', function(request, response) {
-    console.log("USER",request.user);
+    console.log("USER", request.url, request.user);
     response.sendFile(process.cwd() + '/public/index.html');
 });
 
