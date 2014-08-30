@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var findOrCreate = require('mongoose-findorcreate');
 
 var QueueSchema = new Schema({
     name: String,
@@ -13,5 +14,7 @@ var QueueSchema = new Schema({
     minuteOfHour: Number,
     secondOfMinute: Number
 });
+
+QueueSchema.plugin(findOrCreate);
 
 module.exports = mongoose.model('Queue', QueueSchema);
