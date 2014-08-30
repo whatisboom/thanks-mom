@@ -36,7 +36,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-    console.log(id);
+    console.log('deserialize': id);
     done(id);
 });
 
