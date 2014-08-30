@@ -1,5 +1,5 @@
 var cronPattern = function(queue) {
-    var pattern = [];
+    var pattern = '';
     // %s %m %h %dom %mon %dow
     switch (queue.interval) {
         case 'Hourly':
@@ -13,13 +13,11 @@ var cronPattern = function(queue) {
             break;
         default:
             console.log('¯\\_(ツ)_/¯');
-
-        return pattern.replace('%m', queue.minuteOfHour)
-            .replace('%h', queue.hourOfDay)
-            .replace('%dow', '*');
     }
 
-    return pattern.join();
+    return pattern.replace('%m', queue.minuteOfHour)
+        .replace('%h', queue.hourOfDay)
+        .replace('%dow', queue.dayOfWeek);
 };
 
 module.exports = {

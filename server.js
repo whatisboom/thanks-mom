@@ -6,9 +6,11 @@ var async = require('async');
 var extend = require('extend');
 var q = require('q');
 var cron = require('cron').CronJob;
+var passport = require('passport');
+var TwitterStrategy = require('passport-twitter').Strategy;
 
 var db = require('./config/db')
-var cronFormat = require('./app/modules/cronFormat');
+var formatter = require('./app/modules/formatter');
 var Tweet = require('./app/models/Tweet');
 var Queue = require('./app/models/Queue');
 
@@ -217,14 +219,11 @@ Queue.find(function(error, queues) {
     var crons = [];
     for (var i = 0; i < queues.length; i++) {
         var queue = queues[i];
-        var cronpattern = [0];
-        cronpattern.push( queue.minuteOfHour || 0 );
-        cronpattern.push( queue.hourOfDay || 0 )
-        console.log(cronpattern);
-        cronpattern = "* * * * * *";
+        var cronpattern = formatter.cronPattern(queue);
         crons[i] = new cron(cronpattern, function() {
             console.log('cron tick: ' + queue.interval);
         });
+        console.log('Starting ' + queue.interval.toLowerCase() + ' job with pattern ' + cronpattern);
         crons[i].start();
     }
 });

@@ -24,7 +24,7 @@
     </div>
     <div class="row">
         <div class="columns small-6">
-            <label ng-show="newQueue.interval == 0">
+            <label ng-show="newQueue.interval == 'Weekly'">
                 Day of Week:
                 <select ng-change="debug()" ng-model="newQueue.dayOfWeek">
                     <option ng-repeat="day in daysOfWeek" ng-value="$index">{{day}}</option>
@@ -32,7 +32,7 @@
             </label>
         </div>
         <div class="columns small-3">
-            <label ng-show="newQueue.interval == 0 || newQueue.interval == 1">
+            <label ng-show="newQueue.interval == 'Weekly' || newQueue.interval == 'Daily'">
                 Hour of Day:
                 <select ng-model="newQueue.hourOfDay">
                     <option ng-repeat="hour in hoursOfDay" ng-value="$index">{{hour}}</option>
@@ -40,7 +40,7 @@
             </label>
         </div>
         <div class="columns small-3">
-            <label ng-show="newQueue.interval >= 0">
+            <label ng-show="newQueue.interval == 'Weekly' || newQueue.interval == 'Daily' || newQueue.interval == 'Hourly'">
                 Minute of Hour:
                 <select ng-model="newQueue.minuteOfHour">
                     <option ng-repeat="minute in minutesOfHour" ng-value="$index">{{minute}}</option>
