@@ -26,6 +26,10 @@ angular.module('fnthanksmom', [
                 templateUrl: '/public/partials/queues.html',
                 controller: 'QueuesController'
             })
+            .when('/auth/twitter/callback', {
+                templateUrl: '/public/partials/twitter/index.html',
+                controller: 'TwitterCallbackController'
+            })
             .otherwise({
                 redirectTo: '/'
             });

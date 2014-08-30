@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -15,6 +16,19 @@ var formatter = require('./app/modules/formatter');
 var Tweet = require('./app/models/Tweet');
 var Queue = require('./app/models/Queue');
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(
+    session(
+        {
+            secret: 'omgwtfbbq',
+            resave: true,
+            saveUninitialized: true
+        }
+    )
+);
+
 passport.use(new TwitterStrategy(
     {
         consumerKey: twitterApi.consumerKey,
@@ -29,9 +43,6 @@ passport.use(new TwitterStrategy(
 app.get('/auth/twitter', passport.authenticate('twitter'));
 
 app.get('/auth/twitter/callback', passport.authenticate('twitter', {successRedirect: '/twitter', failureRedirect: '/login'}));
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 
 var router = express.Router();
 
