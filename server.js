@@ -8,6 +8,7 @@ var q = require('q');
 var cron = require('cron').CronJob;
 
 var db = require('./config/db')
+var cronFormat = require('./app/modules/cronFormat');
 var Tweet = require('./app/models/Tweet');
 var Queue = require('./app/models/Queue');
 
@@ -212,12 +213,18 @@ app.use('*', function(request, response) {
 
 app.listen( process.env.PORT || 8888 );
 
-/*Queue.find(function(error, queues) {
+Queue.find(function(error, queues) {
     var crons = [];
-    for (var i = queues.length; i > 0; i--) {
-        crons[i] = new cron(queues[i].interval, function() {
-            console.log('cron tick');
+    for (var i = 0; i < queues.length; i++) {
+        var queue = queues[i];
+        var cronpattern = [0];
+        cronpattern.push( queue.minuteOfHour || 0 );
+        cronpattern.push( queue.hourOfDay || 0 )
+        console.log(cronpattern);
+        cronpattern = "* * * * * *";
+        crons[i] = new cron(cronpattern, function() {
+            console.log('cron tick: ' + queue.interval);
         });
         crons[i].start();
     }
-});*/
+});

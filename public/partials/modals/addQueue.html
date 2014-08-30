@@ -16,8 +16,8 @@
         <div class="columns small-6">
             <label>
                 Interval:
-                <select ng-model="newQueue.interval" ng-required>
-                    <option ng-repeat="interval in intervals" ng-value="$index">{{interval}}</option>
+                <select ng-model="newQueue.interval" ng-required ng-options="interval for interval in intervals" ng-change="debug()">
+                    <!-- <option ng-repeat="interval in intervals" ng-value="$index">{{interval}}</option> -->
                 </select>
             </label>
         </div>
