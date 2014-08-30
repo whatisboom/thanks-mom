@@ -17,7 +17,7 @@
 </head>
 <body>
 
-<div class="row">
+<div class="app-wrapper row">
     <div class="columns small-3">
         <ul class="side-nav" ng-controller="NavController">
             <li class="heading" ng-class="{ active: isActive('/twitter')}"><a href="/twitter">Twitter</a></li>
@@ -27,7 +27,7 @@
             <li class="heading" ng-class="{ active: isActive('/facebook')}"><a href="/facebook">Facebook</a></li>
         </ul>
     </div>
-    <div class="columns small-9">
+    <div class="content columns small-9">
         <div class="row">
             <div class="columns small-12">
                 <h1 ng-bind="Page.title()"></h1>
