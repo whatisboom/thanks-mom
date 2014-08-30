@@ -89,8 +89,6 @@ router.route('/tweets')
     .get(function(request, response) {
         var context = initContext();
 
-        context.meta = { user: request.user || 'wat' };
-
         async.parallel(
             [
                 function(callback) {
