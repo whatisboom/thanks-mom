@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var findOrCreate = require('mongoose-findorcreate');
 
 var UserSchema = new Schema({
-    text: Number
+    id: Number
 });
 
 UserSchema.plugin(findOrCreate);
