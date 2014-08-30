@@ -83,6 +83,8 @@ router.route('/tweets')
     .get(function(request, response) {
         var context = initContext();
 
+        console.log(request.user);
+
         async.parallel(
             [
                 function(callback) {
@@ -258,7 +260,6 @@ app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback', passport.authenticate('twitter', {successRedirect: '/twitter', failureRedirect: '/login'}));
 
 app.use('*', function(request, response) {
-    console.log("USER", request.url, request.user);
     response.sendFile(process.cwd() + '/public/index.html');
 });
 
