@@ -30,7 +30,7 @@ app.use(
 );
 
 app.use(passport.initialize());
-app.use(password.session());
+app.use(passport.session());
 
 passport.use(new TwitterStrategy(
     {
