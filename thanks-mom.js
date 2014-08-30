@@ -10,19 +10,20 @@ var cron = require('cron').CronJob;
 var passport = require('passport');
 var TwitterStrategy = require('passport-twitter').Strategy;
 
-var db = require('./config/db')
-var twitterApi = require('./config/twitter-api')
+var db = require('./config/db');
+var secret = require('./config/secret');
+var twitterApi = require('./config/twitter-api');
 var formatter = require('./app/modules/formatter');
 var Tweet = require('./app/models/Tweet');
 var Queue = require('./app/models/Queue');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(express.cookieParser(secret));
 app.use(
     session(
         {
-            secret: 'omgwtfbbq',
+            secret: secret,
             resave: true,
             saveUninitialized: true
         }
@@ -39,7 +40,7 @@ passport.use(new TwitterStrategy(
         callbackURL: twitterApi.callbackURL
     },
     function(token, tokenSecret, profile, done) {
-        console.log(profile);
+        console.log(profile.id);
         done(null, profile);
     }
 ));
