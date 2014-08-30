@@ -33,18 +33,18 @@ app.use(
     )
 );
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-    User.findOrCreate({id: id}, function(error, user, created) {
+    User.findOrCreate({ id: id }, function(error, user, created) {
         done(error, user);
     })
 });
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 passport.use(new TwitterStrategy(
     {
@@ -59,10 +59,6 @@ passport.use(new TwitterStrategy(
         });
     }
 ));
-
-app.get('/auth/twitter', passport.authenticate('twitter'));
-
-app.get('/auth/twitter/callback', passport.authenticate('twitter', {successRedirect: '/twitter', failureRedirect: '/login'}));
 
 var router = express.Router();
 
@@ -255,6 +251,10 @@ router.route('/queues')
 app.use('/api', router);
 
 app.use('/public', express.static(__dirname + '/public'));
+
+app.get('/auth/twitter', passport.authenticate('twitter'));
+
+app.get('/auth/twitter/callback', passport.authenticate('twitter', {successRedirect: '/twitter', failureRedirect: '/login'}));
 
 app.use('*', function(request, response) {
     console.log(request.user);
