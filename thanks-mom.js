@@ -37,6 +37,7 @@ passport.use(new TwitterStrategy(
     },
     function(token, tokenSecret, profile, done) {
         console.log(token, tokenSecret, profile);
+        done(null, profile);
     }
 ));
 
