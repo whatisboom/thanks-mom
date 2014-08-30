@@ -10,9 +10,25 @@ var passport = require('passport');
 var TwitterStrategy = require('passport-twitter').Strategy;
 
 var db = require('./config/db')
+var twitterApi = require('./config/twitter-api')
 var formatter = require('./app/modules/formatter');
 var Tweet = require('./app/models/Tweet');
 var Queue = require('./app/models/Queue');
+
+passport.use(new TwitterStrategy(
+    {
+        consumerKey: twitterApi.consumerKey,
+        consumerSecret: twitterApi.consumerSecret,
+        callbackURL: twitterApi.callbackURL
+    },
+    function(token, tokenSecret, profile, done) {
+        console.log(token, tokenSecret, profile);
+    }
+));
+
+app.get('/auth/twitter', passport.authenticate('twitter'));
+
+app.get('/auth/twitter/callback', passport.authenticate('twitter', {successRedirect: '/twitter', failureRedirect: '/login'}));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
