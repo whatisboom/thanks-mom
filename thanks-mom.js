@@ -51,7 +51,7 @@ passport.use(new TwitterStrategy(
     },
     function(token, tokenSecret, profile, done) {
         console.log('output?' + profile.id);
-        done(null, profile.id);
+        done(null, profile);
     }
 ));
 
