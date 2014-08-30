@@ -1,0 +1,56 @@
+<form ng-submit="queueTweet()">
+    <div class="row">
+        <div class="columns small-12">
+            <fieldset>
+            <legend>
+                Schedule a Tweet
+            </legend>
+            <div class="row">
+                <div class="columns small-12">
+                    <div class="row collapse">
+                        <div class="columns small-10 medium-8">
+                            <input class="radius" placeholder="Tweet Text" type="text" ng-required ng-model="tweet.text" name="text"/>
+                        </div>
+                        <div class="columns small-2 medium-2">
+                            <span class="postfix">{{ tweet.text.length + tweet.queue.hashtags.length || 0 }}/140</span>
+                        </div>
+                        <div class="columns small-12 medium-2">
+                            <button class="radius small right">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="columns small-12">
+                    <select ng-model="tweet.queue" ng-change="debug()" ng-required ng-options="queue.name for queue in data.queues" name="queue"></select>
+                </div>
+            </div>
+        </fieldset>  
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <div class="columns small-12">
+        <button ng-click="openAddQueueModal()" class="radius small">Add New Queue</button>
+        <a ng-href="/queues" class="button secondary radius small">Manage Queues</a>
+    </div>
+</div>
+
+<div class="row" ng-show="data.tweets.length">
+    <div class="columns small-12">
+        <table class="columns small-12">
+            <thead>
+                <tr>
+                    <th colspan="2">Tweet</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in data.tweets">
+                    <td ng-bind="item.text"></td>
+                    <td><a ng-click="deleteTweet(item._id)" class="small right button radius">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
