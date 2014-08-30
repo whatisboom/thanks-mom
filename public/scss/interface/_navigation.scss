@@ -1,7 +1,11 @@
 .side-nav {
     li {
         &.heading {
-            padding: rem-calc(7 14)
+            a {
+                &:not(.button) {
+                    padding: rem-calc(7 14)
+                }
+            }
         }
     }
 }
