@@ -15,6 +15,8 @@ var db = require('./config/db');
 var secret = require('./config/secret');
 var twitterApi = require('./config/twitter-api');
 var formatter = require('./app/modules/formatter');
+
+var User = require('./app/models/User');
 var Tweet = require('./app/models/Tweet');
 var Queue = require('./app/models/Queue');
 
@@ -35,10 +37,11 @@ passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
 
-/*passport.deserializeUser(function(id, done) {
-    //console.log('deserialize'+ id);
-    done(id);
-});*/
+passport.deserializeUser(function(id, done) {
+    User.findOrCreate({id: id}, function(error, user, created) {
+        done(error, user);
+    })
+});
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -50,8 +53,10 @@ passport.use(new TwitterStrategy(
         callbackURL: twitterApi.callbackURL
     },
     function(token, tokenSecret, profile, done) {
-        //console.log('output? ' + profile.id);
-        done(null, profile);
+        User.findOrCreate({ id: profile.id }, function(error, user, craeted) {
+            if (error) { return done(err); }
+            done(null, user);
+        });
     }
 ));
 
